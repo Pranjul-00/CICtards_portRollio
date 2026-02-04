@@ -1,34 +1,33 @@
 "use client";
 import { motion } from "framer-motion";
-import { SpotlightCard } from "./ui/SpotlightCard";
+import { TiltCard } from "./ui/TiltCard";
+import GeometricAvatar from "./ui/GeometricAvatar";
 
 export default function MemberCard({ member, index }) {
-    // Get initials for avatar
-    const initials = member.name.split(' ').slice(0, 2).map(n => n[0]).join('');
-
     return (
         <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
             className="h-full"
         >
-            <SpotlightCard className="h-full flex flex-col p-8">
-                {/* Header: Avatar & Name */}
-                <div className="flex items-center gap-4 mb-6">
-                    <div className="w-14 h-14 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-xl font-bold text-white shrink-0">
-                        {initials}
-                    </div>
+            <TiltCard className="h-full rounded-3xl bg-slate-900 border border-slate-800 p-8 flex flex-col relative group overflow-hidden">
+                {/* Abstract Background Gradient */}
+                <div className="absolute top-0 right-0 w-[80%] h-[80%] bg-gradient-to-br from-purple-500/10 to-blue-500/10 rounded-full blur-3xl -z-10 translate-x-1/2 -translate-y-1/2 group-hover:bg-purple-500/20 transition-colors duration-500" />
+
+                {/* Header */}
+                <div className="flex items-center gap-5 mb-6">
+                    <GeometricAvatar name={member.name} className="w-16 h-16 shrink-0 shadow-lg shadow-purple-500/20 ring-2 ring-white/5" />
                     <div>
-                        <h3 className="text-xl font-bold text-slate-100">{member.name}</h3>
-                        <p className="text-sm font-medium text-purple-400">{member.role}</p>
+                        <h3 className="text-xl font-bold text-white group-hover:text-purple-300 transition-colors">{member.name}</h3>
+                        <p className="text-sm font-medium text-purple-400/90 uppercase tracking-wide">{member.role}</p>
                     </div>
                 </div>
 
                 {/* Bio */}
                 <div className="flex-grow">
-                    <p className="text-slate-400 text-sm leading-relaxed mb-6">
+                    <p className="text-slate-400 text-sm leading-relaxed mb-6 font-light">
                         {member.bio}
                     </p>
 
@@ -37,7 +36,7 @@ export default function MemberCard({ member, index }) {
                         {member.skills.map(skill => (
                             <span
                                 key={skill}
-                                className="text-[10px] uppercase tracking-wider font-semibold px-2 py-1 rounded-md bg-slate-800 text-slate-400 border border-slate-700/50"
+                                className="text-[10px] uppercase font-bold px-2 py-1 rounded-md bg-slate-800/80 text-slate-400 border border-slate-700/50 group-hover:border-purple-500/30 group-hover:text-slate-300 transition-colors"
                             >
                                 {skill}
                             </span>
@@ -45,19 +44,21 @@ export default function MemberCard({ member, index }) {
                     </div>
                 </div>
 
-                {/* Footer: Portfolio Link */}
-                <a
-                    href={member.portfolio}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-auto group flex items-center justify-between w-full py-3 px-4 rounded-xl bg-slate-800/50 hover:bg-slate-800 text-slate-300 hover:text-white transition-all duration-300 border border-slate-700/50 hover:border-purple-500/30"
-                >
-                    <span className="text-sm font-medium">View Portfolio</span>
-                    <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
-                </a>
-            </SpotlightCard>
+                {/* Footer */}
+                <div className="mt-auto pt-6 border-t border-slate-800/50">
+                    <a
+                        href={member.portfolio}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-between w-full text-slate-400 hover:text-white transition-colors group/link"
+                    >
+                        <span className="text-xs font-bold uppercase tracking-widest">Portfolio</span>
+                        <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center group-hover/link:bg-purple-500 group-hover/link:text-white transition-all">
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                        </div>
+                    </a>
+                </div>
+            </TiltCard>
         </motion.div>
     );
 }
