@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import GeometricAvatar from "./ui/GeometricAvatar";
 
 export default function MemberCard({ member, index }) {
@@ -20,8 +21,19 @@ export default function MemberCard({ member, index }) {
 
                 {/* Header */}
                 <div className="flex flex-col items-center text-center mb-6 border-b-2 border-dashed border-gray-700 pb-4">
-                    <div className="w-24 h-24 mb-4 border-4 border-white overflow-hidden bg-black">
-                        <GeometricAvatar name={member.name} className="w-full h-full rounded-none" />
+                    <div className="w-24 h-24 mb-4 border-4 border-white overflow-hidden bg-black relative">
+                        {member.image ? (
+                            <Image
+                                src={member.image}
+                                alt={member.name}
+                                fill
+                                className="object-cover"
+                                sizes="96px"
+                                style={{ imageRendering: 'pixelated' }}
+                            />
+                        ) : (
+                            <GeometricAvatar name={member.name} className="w-full h-full rounded-none" />
+                        )}
                     </div>
                     <h3 className="text-sm md:text-base text-yellow-400 mb-1">{member.name}</h3>
                     <p className="text-[10px] text-green-400 uppercase">{member.role}</p>
