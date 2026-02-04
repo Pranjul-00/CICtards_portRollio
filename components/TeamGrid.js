@@ -15,9 +15,11 @@ export default function TeamGrid() {
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr">
+                <div className="flex flex-wrap justify-center gap-6">
                     {members.map((member, index) => (
-                        <MemberCard key={member.id} member={member} index={index} />
+                        <div key={member.name} className="w-full md:w-[calc(50%-0.75rem)] lg:w-[calc(33.33%-1.1rem)]">
+                            <MemberCard member={member} index={index} />
+                        </div>
                     ))}
                 </div>
             </div>
