@@ -1,5 +1,17 @@
 @import "tailwindcss";
 
+@font-face {
+    font-family: 'Videotype';
+    src: url('/fonts/videotype.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@theme {
+    --font-sans: 'Videotype', monospace;
+    --font-mono: 'Videotype', monospace;
+}
+
 :root {
     --neon-green: #39ff14;
     --neon-pink: #ff00ff;
@@ -7,7 +19,7 @@
 }
 
 body {
-    font-family: var(--font-press-start), monospace;
+    font-family: 'Videotype', monospace;
     background-color: #050505;
     color: #fff;
     overflow-x: hidden;
