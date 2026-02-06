@@ -4,7 +4,7 @@ export const members = [
     {
         id: 1,
         name: "Pranjul Gupta",
-        role: "nigatron",
+        role: "",
         bio: `Visionary leader passionate about autonomous systems. ${sharedBio}`,
         skills: ["Robotics", "AI/ML", "Python", "System Design"],
         portfolio: "#",
@@ -13,7 +13,7 @@ export const members = [
     {
         id: 2,
         name: "Himanshu Yadav",
-        role: "Badmos",
+        role: "",
         bio: `Building scalable web architectures. ${sharedBio}`,
         skills: ["Next.js", "Node.js", "Cloud Architecture", "React"],
         portfolio: "#",
@@ -22,7 +22,7 @@ export const members = [
     {
         id: 3,
         name: "Chandragupt Sharma",
-        role: "Sandiyo Ka Raudagar",
+        role: "",
         bio: `Crafting intuitive digital experiences. ${sharedBio}`,
         skills: ["Design Systems", "Framer Motion", "Frontend", "Prototyping"],
         portfolio: "#",
@@ -31,7 +31,7 @@ export const members = [
     {
         id: 4,
         name: "Aditya Bhagora",
-        role: "Cornball",
+        role: "",
         bio: `Bridging code and creativity. ${sharedBio}`,
         skills: ["Creative Coding", "WebGL", "Interactive Design", "Blender"],
         portfolio: "#",
@@ -40,7 +40,7 @@ export const members = [
     {
         id: 5,
         name: "Mohd. Ovesh",
-        role: "Exists",
+        role: "",
         bio: `Optimizing performance and security. ${sharedBio}`,
         skills: ["Backend Development", "Database Design", "API Security", "DevOps"],
         portfolio: "#",
