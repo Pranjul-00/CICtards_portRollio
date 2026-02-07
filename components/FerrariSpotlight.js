@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useRef, useState } from "react";
 import { useScroll, useSpring, useTransform, motion, useMotionValueEvent } from "framer-motion";
 import Link from "next/link";
@@ -256,19 +257,18 @@ export default function FerrariSpotlight({ member }) {
 
                     {/* Info Cards with Inverse Colors */}
                     {annotations.map((ann, i) => {
-                        const progress = smoothProgress.get();
-                        if (progress < ann.scrollStart || progress > ann.scrollEnd) return null;
+                        if (currentProgress < ann.scrollStart || currentProgress > ann.scrollEnd) return null;
 
                         const opacity = Math.min(
-                            (progress - ann.scrollStart) / 0.03,
-                            (ann.scrollEnd - progress) / 0.03,
+                            (currentProgress - ann.scrollStart) / 0.03,
+                            (ann.scrollEnd - currentProgress) / 0.03,
                             1
                         );
 
                         // Calculate inverse colors
-                        const bgR = Math.round(37 + (218 - 37) * progress);
-                        const bgG = Math.round(36 + (213 - 36) * progress);
-                        const bgB = Math.round(35 + (208 - 35) * progress);
+                        const bgR = Math.round(37 + (218 - 37) * currentProgress);
+                        const bgG = Math.round(36 + (213 - 36) * currentProgress);
+                        const bgB = Math.round(35 + (208 - 35) * currentProgress);
 
                         const cardBgR = 255 - bgR;
                         const cardBgG = 255 - bgG;
@@ -347,7 +347,7 @@ export default function FerrariSpotlight({ member }) {
                             userSelect: 'none'
                         }}
                         initial={{ opacity: 0 }}
-                        animate={{ opacity: smoothProgress.get() < 0.1 ? 0.6 : 0 }}
+                        animate={{ opacity: currentProgress < 0.1 ? 0.6 : 0 }}
                     >
                         SCROLL ↓
                     </motion.div>
