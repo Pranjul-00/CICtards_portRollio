@@ -228,8 +228,8 @@ export default function FerrariSpotlight({ member }) {
                                         markerEnd="url(#arrowhead)"
                                     />
                                 </g>
-                        });
-                    })
+                            );
+                        })}
                     </svg>
 
                     {/* Info Cards - Fixed Position */}
