@@ -83,7 +83,8 @@ export default function ScratchRevealImage({
                 // Radius can shrink slightly as it dies for smoother heal? Or keep constant.
                 // improved: Shrink slightly at end of life for "closing up" effect
                 // Start shrinking only in the last 30 frames (after 150)
-                const radius = point.age > 150 ? (180 - point.age) * (40 / 30) : 40;
+                // Base radius increased to 80px (160px diameter) for BIG reveal
+                const radius = point.age > 150 ? (180 - point.age) * (80 / 30) : 80;
                 ctx.arc(point.x, point.y, radius, 0, Math.PI * 2);
                 ctx.fill();
             });
