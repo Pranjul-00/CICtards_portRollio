@@ -22,15 +22,7 @@ export default function MemberCard({ member, index }) {
                 showHealth={false}
                 showMana={false}
                 showExperience={false}
-                customStats={[
-                    { label: "Bio", value: member.bio, max: null },
-                    ...member.skills.slice(0, 6).map(skill => ({
-                        label: skill,
-                        value: 100,
-                        max: 100,
-                        color: "bg-yellow-500"
-                    }))
-                ]}
+                customStats={[]}
             />
         </motion.div>
     );
