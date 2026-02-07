@@ -28,7 +28,7 @@ export default function CursorTrail({ color = "#FF2800" }) {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             // Filter out old points
-            pointsRef.current = pointsRef.current.filter((point) => point.age < 50);
+            pointsRef.current = pointsRef.current.filter((point) => point.age < 25); // Reduced age for faster fade
 
             // Draw the "thread"
             if (pointsRef.current.length > 1) {
