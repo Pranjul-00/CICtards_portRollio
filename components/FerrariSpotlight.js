@@ -233,7 +233,7 @@ export default function FerrariSpotlight({ member }) {
                             transition={{ duration: 0.8, delay: 0.6 }}
                         >
                             <img
-                                src="/lh-helmet.webp"
+                                src="/LH_2025_helmet-1-removebg-preview.png"
                                 alt="LH Helmet"
                                 className="w-64 h-64 object-contain"
                                 style={{ filter: 'drop-shadow(0 5px 15px rgba(0,0,0,0.2))' }}
