@@ -41,32 +41,18 @@ export default function CursorTrail({ color = "#FF2800" }) {
                     ctx.lineTo(point.x, point.y);
                 }
 
-                ctx.lineCap = "round"; // Smoother train
+                ctx.lineCap = "round";
                 ctx.lineJoin = "round";
                 ctx.strokeStyle = color;
-                ctx.lineWidth = 12; // Thicker smooth trail
+                ctx.lineWidth = 60; // Huge smooth trail as requested
                 ctx.shadowColor = color;
-                ctx.shadowBlur = 20;
-                ctx.globalAlpha = 0.6;
+                ctx.shadowBlur = 30;
+                ctx.globalAlpha = 0.5;
                 ctx.stroke();
                 ctx.shadowBlur = 0;
             }
 
-            // Draw "pixels" floating around the trail
-            pointsRef.current.forEach((point) => {
-                point.age += 1;
-                const life = 1 - point.age / 50;
-                const size = 60 * life; // Huge 60px pixels as requested
-
-                // Deterministic random position based on point coordinates to keep it stable but scattered
-                const offsetX = (Math.sin(point.x * 0.1 + point.age * 0.2) * 30 * life);
-                const offsetY = (Math.cos(point.y * 0.1 + point.age * 0.2) * 30 * life);
-
-                ctx.fillStyle = color;
-                ctx.globalAlpha = life * 0.4; // Slightly transparent to see through
-                // Draw scattered square
-                ctx.fillRect(point.x + offsetX - size / 2, point.y + offsetY - size / 2, size, size);
-            });
+            // Pixels element removed completely for smooth look
 
             animationFrameId = requestAnimationFrame(animate);
         };
