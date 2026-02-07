@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { getMemberBySlug, getAllMemberSlugs } from "@/data/members";
 import GameStage from "@/components/GameStage";
+import FerrariSpotlight from "@/components/FerrariSpotlight";
 
 // Generate static params for all team members
 export async function generateStaticParams() {
@@ -36,5 +37,11 @@ export default async function TeamMemberPage({ params }) {
         notFound();
     }
 
+    // Special Ferrari spotlight page for Pranjul
+    if (member.slug === 'pranjul-gupta') {
+        return <FerrariSpotlight member={member} />;
+    }
+
+    // Default game stage for other members
     return <GameStage member={member} />;
 }
