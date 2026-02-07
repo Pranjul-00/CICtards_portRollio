@@ -234,39 +234,7 @@ export default function FerrariSpotlight({ member }) {
                         />
                     </motion.div>
 
-                    {/* Wobbly wave transition - sweeps up from bottom */}
-                    <motion.div
-                        className="absolute bottom-0 left-0 w-full"
-                        style={{
-                            zIndex: 4,
-                            height: '120vh',
-                            transform: `translateY(${Math.max(0, (1 - currentProgress * 3) * 100)}%)`
-                        }}
-                    >
-                        <svg
-                            viewBox="0 0 1200 800"
-                            preserveAspectRatio="none"
-                            className="w-full h-full"
-                        >
-                            <defs>
-                                <linearGradient id="darkGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                                    <stop offset="0%" stopColor="rgb(37,36,35)" stopOpacity="0" />
-                                    <stop offset="30%" stopColor="rgb(37,36,35)" stopOpacity="1" />
-                                </linearGradient>
-                            </defs>
-                            <path
-                                d={`
-                                    M 0,${200 + Math.sin(currentProgress * 10) * 50}
-                                    Q 150,${150 + Math.sin(currentProgress * 12) * 40} 300,${200 + Math.sin(currentProgress * 8) * 60}
-                                    T 600,${200 + Math.sin(currentProgress * 15) * 50}
-                                    T 900,${200 + Math.sin(currentProgress * 11) * 55}
-                                    T 1200,${200 + Math.sin(currentProgress * 9) * 45}
-                                    L 1200,800 L 0,800 Z
-                                `}
-                                fill="url(#darkGradient)"
-                            />
-                        </svg>
-                    </motion.div>
+
                 </div>
             )}
 
