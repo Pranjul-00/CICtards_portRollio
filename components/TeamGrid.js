@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import MemberCard from "./MemberCard";
 import { members } from "@/data/members";
 
@@ -33,26 +34,23 @@ export default function TeamGrid() {
 
                 <div className="flex flex-wrap justify-center gap-8 perspective-1000">
                     {shuffledMembers.map((member, index) => {
-                        // Generate deterministic random-ish values for this specific render instance
-                        const randomRot = Math.random() * 10 - 5; // -5 to 5 deg
-                        const randomX = Math.random() * 100 - 50;
-                        const randomY = Math.random() * 100 + 50;
-
                         return (
                             <motion.div
                                 key={member.name}
-                                initial={{ opacity: 0, x: randomX, y: randomY, rotate: randomRot, scale: 0.5 }}
-                                whileInView={{ opacity: 1, x: 0, y: 0, rotate: 0, scale: 1 }}
+                                initial={{ opacity: 0, scale: 0.5 }}
+                                whileInView={{ opacity: 1, scale: 1 }}
                                 viewport={{ once: true, margin: "100px" }}
                                 transition={{
                                     type: "spring",
                                     stiffness: 100,
                                     damping: 15,
-                                    delay: index * 0.15
+                                    delay: index * 0.1
                                 }}
                                 className="w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.33%-2rem)]"
                             >
-                                <MemberCard member={member} index={index} />
+                                <Link href={`/team/${member.slug}`}>
+                                    <MemberCard member={member} index={index} />
+                                </Link>
                             </motion.div>
                         );
                     })}

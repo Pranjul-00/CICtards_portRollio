@@ -62,14 +62,11 @@ export default function MemberCard({ member, index }) {
                 </div>
 
                 {/* Footer */}
-                <a
-                    href={member.portfolio}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-auto block w-full py-2 bg-blue-600 text-white text-[10px] text-center border-b-4 border-blue-900 active:border-0 active:mt-[2px] hover:bg-blue-500 transition-none"
+                <div
+                    className="mt-auto block w-full py-2 bg-blue-600 text-white text-[10px] text-center border-b-4 border-blue-900 group-hover:bg-pink-600 group-hover:border-pink-900 transition-all"
                 >
-                    VIEW STATUS
-                </a>
+                    SELECT PLAYER
+                </div>
 
             </div>
         </motion.div>
