@@ -28,7 +28,7 @@ export default function CursorTrail({ color = "#FF2800" }) {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             // Filter out old points
-            pointsRef.current = pointsRef.current.filter((point) => point.age < 25);
+            pointsRef.current = pointsRef.current.filter((point) => point.age < 50);
 
             // Draw the "thread"
             if (pointsRef.current.length > 1) {
@@ -41,13 +41,13 @@ export default function CursorTrail({ color = "#FF2800" }) {
                     ctx.lineTo(point.x, point.y);
                 }
 
-                ctx.lineCap = "round";
-                ctx.lineJoin = "round";
+                ctx.lineCap = "square";
+                ctx.lineJoin = "bevel";
                 ctx.strokeStyle = color;
-                ctx.lineWidth = 2;
+                ctx.lineWidth = 4;
                 ctx.shadowColor = color;
-                ctx.shadowBlur = 5; // Glow effect
-                ctx.globalAlpha = 0.6;
+                ctx.shadowBlur = 10; // Glow effect
+                ctx.globalAlpha = 0.4;
                 ctx.stroke();
                 ctx.shadowBlur = 0;
             }
@@ -55,11 +55,11 @@ export default function CursorTrail({ color = "#FF2800" }) {
             // Draw "pixels" at each point
             pointsRef.current.forEach((point) => {
                 point.age += 1;
-                const life = 1 - point.age / 25;
-                const size = 6 * life; // Pixels shrink
+                const life = 1 - point.age / 50;
+                const size = 15 * life; // Much larger pixels
 
                 ctx.fillStyle = color;
-                ctx.globalAlpha = life;
+                ctx.globalAlpha = life * 0.8;
                 // Draw square for pixel look
                 ctx.fillRect(point.x - size / 2, point.y - size / 2, size, size);
             });
