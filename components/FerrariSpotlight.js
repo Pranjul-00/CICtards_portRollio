@@ -224,9 +224,9 @@ export default function FerrariSpotlight({ member }) {
                             />
                         </motion.div>
 
-                        {/* LH Helmet - massive scale */}
+                        {/* LH Helmet - massive scale, moved up */}
                         <motion.div
-                            className="absolute inset-0 flex items-start justify-center pt-[5vh]"
+                            className="absolute inset-0 flex items-start justify-center -mt-[10vh]"
                             style={{ zIndex: 4 }}
                             initial={{ opacity: 0, scale: 0.8 }}
                             animate={{ opacity: 1, scale: 1 }}
