@@ -185,7 +185,7 @@ export default function FerrariSpotlight({ member }) {
 
             {/* Hero Section - Hamilton */}
             {isLoaded && (
-                <div className="sticky top-0 left-0 w-full h-screen overflow-hidden" style={{ zIndex: 5 }}>
+                <div className="sticky top-0 left-0 w-full h-screen overflow-hidden" style={{ zIndex: 100 }}>
                     {/* Light background */}
                     <div className="absolute inset-0 bg-[rgb(218,213,208)]" />
 
