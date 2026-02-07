@@ -27,6 +27,9 @@ export default function CursorTrail({ color = "#FF2800" }) {
         const animate = () => {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+            // Increment age for ALL points first
+            pointsRef.current.forEach(p => p.age += 1);
+
             // Filter out old points
             pointsRef.current = pointsRef.current.filter((point) => point.age < 25); // Reduced age for faster fade
 
