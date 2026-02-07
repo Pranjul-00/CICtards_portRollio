@@ -6,6 +6,7 @@ export const members = [
         name: "Pranjul Gupta",
         slug: "pranjul-gupta",
         role: "GOAT",
+        quote: "Give Up",
         bio: `Visionary leader passionate about autonomous systems. ${sharedBio}`,
         skills: [
             "Team Leadership",
@@ -63,6 +64,7 @@ export const members = [
         name: "Chandragupt Sharma",
         slug: "chandragupt-sharma",
         role: "Clutch God",
+        quote: "Sleep? What's that?",
         bio: `Crafting intuitive digital experiences. ${sharedBio}`,
         skills: [
             "Machine Learning",
