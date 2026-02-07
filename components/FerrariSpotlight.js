@@ -125,23 +125,25 @@ export default function FerrariSpotlight({ member }) {
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
             // Calculate zoom based on scroll (start zoomed out, zoom in as you scroll)
-            const zoomFactor = 0.6 + (progress * 0.4); // Start at 60%, zoom to 100%
+            const zoomFactor = 0.7 + (progress * 0.5); // Start at 70%, zoom to 120%
 
-            // Full-page Ferrari with zoom - COVER mode (no square confinement)
+            // Full-page Ferrari - TRUE COVER mode (fills entire viewport, no confinement)
             const imgAspect = img.width / img.height;
             const canvasAspect = canvas.width / canvas.height;
             let drawWidth, drawHeight, offsetX, offsetY;
 
-            // Cover the entire canvas (like background-size: cover)
+            // Cover: ensure image fills entire canvas (like CSS background-size: cover)
             if (imgAspect > canvasAspect) {
+                // Image is wider - fit to height and overflow width
                 drawHeight = canvas.height * zoomFactor;
-                drawWidth = (canvas.height * zoomFactor) * imgAspect;
+                drawWidth = drawHeight * imgAspect;
                 offsetX = (canvas.width - drawWidth) / 2;
-                offsetY = (canvas.height - drawHeight) / 2;
+                offsetY = 0;
             } else {
+                // Image is taller - fit to width and overflow height
                 drawWidth = canvas.width * zoomFactor;
-                drawHeight = (canvas.width * zoomFactor) / imgAspect;
-                offsetX = (canvas.width - drawWidth) / 2;
+                drawHeight = drawWidth / imgAspect;
+                offsetX = 0;
                 offsetY = (canvas.height - drawHeight) / 2;
             }
 
