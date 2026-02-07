@@ -39,11 +39,11 @@ export default function MemberCard({ member, index }) {
                         style={{
                             boxShadow: '4px 4px 0 #ff0000'
                         }}>
-                        <h2 className="text-lg text-yellow-400 font-black tracking-wider uppercase"
+                        <h2 className="text-sm text-yellow-400 font-black tracking-wider uppercase"
                             style={{ fontFamily: '"Press Start 2P", sans-serif' }}>
                             {member.name}
                         </h2>
-                        <p className="text-sm text-red-500 font-bold mt-1"
+                        <p className="text-[10px] text-red-500 font-bold mt-1"
                             style={{ fontFamily: '"Press Start 2P", sans-serif' }}>
                             {member.role}
                         </p>
