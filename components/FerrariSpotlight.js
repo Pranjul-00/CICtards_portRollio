@@ -48,7 +48,7 @@ export default function FerrariSpotlight({ member }) {
 
     // START FERRARI ANIMATION AFTER HERO SECTION (1000px / 6000px = ~0.166)
     const ferrariProgress = useTransform(smoothProgress, [0.166, 1], [0, 1]);
-    const ferrariOpacity = useTransform(smoothProgress, [0.15, 0.25], [0, 1]); // Fade in as hero scrolls away
+    const ferrariOpacity = useTransform(smoothProgress, [0.2, 0.3], [0, 1]); // Fade in delayed until AFTER hero section
 
     // Frames only update once we're past the hero section
     const frameIndex = useTransform(ferrariProgress, [0, 1], [0, TOTAL_FRAMES - 1]);
