@@ -70,8 +70,8 @@ export default function ScratchRevealImage({
         ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
 
         // 3. Update scratch points (age them)
-        // Filter out dead points (age > 25, slightly longer than trail for nice effect)
-        scratchPointsRef.current = scratchPointsRef.current.filter(p => p.age < 25);
+        // Filter out dead points (Extend lifespan to 180 frames = ~3 seconds)
+        scratchPointsRef.current = scratchPointsRef.current.filter(p => p.age < 180);
         scratchPointsRef.current.forEach(p => p.age++);
 
         // 4. Draw erasers for active points
@@ -82,7 +82,8 @@ export default function ScratchRevealImage({
                 ctx.beginPath();
                 // Radius can shrink slightly as it dies for smoother heal? Or keep constant.
                 // improved: Shrink slightly at end of life for "closing up" effect
-                const radius = point.age > 20 ? (25 - point.age) * 8 : 40;
+                // Start shrinking only in the last 30 frames (after 150)
+                const radius = point.age > 150 ? (180 - point.age) * (40 / 30) : 40;
                 ctx.arc(point.x, point.y, radius, 0, Math.PI * 2);
                 ctx.fill();
             });
