@@ -114,14 +114,27 @@ export default function GameStage({ member }) {
 
                                 {member.gameMode === "BOSS_RUSH" && (
                                     <div className="h-full flex flex-col">
-                                        <div className="flex-grow">
+                                        <Link
+                                            href={`/team/${member.slug}/f1`}
+                                            className="flex-grow relative group cursor-pointer"
+                                        >
                                             <RacingGame />
-                                        </div>
+                                            {/* Hover overlay */}
+                                            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+                                                <div className="text-yellow-400 font-bold text-2xl animate-pulse">
+                                                    CLICK TO PLAY FULLSCREEN
+                                                </div>
+                                            </div>
+                                        </Link>
                                         <div className="flex gap-4 mt-4">
-                                            {member.projects.map(p => (
-                                                <button key={p.name} className="flex-1 p-2 border-2 border-red-500 hover:bg-red-500 text-white font-bold text-[10px] transition-all">
-                                                    SELECT_{p.name.toUpperCase()}
-                                                </button>
+                                            {member.games && member.games.map(game => (
+                                                <Link
+                                                    key={game.slug}
+                                                    href={`/team/${member.slug}/${game.slug}`}
+                                                    className="flex-1 p-2 border-2 border-red-500 hover:bg-red-500 text-white font-bold text-[10px] transition-all text-center"
+                                                >
+                                                    PLAY_{game.name.toUpperCase()}
+                                                </Link>
                                             ))}
                                         </div>
                                     </div>

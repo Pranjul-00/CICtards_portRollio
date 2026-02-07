@@ -20,6 +20,9 @@ export const members = [
         ],
         stats: { HP: 100, MP: 85, STR: 70, INT: 95, DEX: 65 },
         gameMode: "BOSS_RUSH",
+        games: [
+            { name: "F1 Racing", slug: "f1", component: "RacingGame" }
+        ],
         projects: [
             { name: "AutoBot", desc: "Autonomous delivery drone system.", tech: "Python/ROS" },
             { name: "MindMap", desc: "AI-driven neural network visualizer.", tech: "PyTorch" }
@@ -133,4 +136,30 @@ export function getMemberBySlug(slug) {
 // Helper function to get all member slugs for static generation
 export function getAllMemberSlugs() {
     return members.map(member => member.slug);
+}
+
+// Helper function to get a specific game for a member
+export function getGameBySlug(memberSlug, gameSlug) {
+    const member = getMemberBySlug(memberSlug);
+    if (!member || !member.games) return null;
+    return member.games.find(game => game.slug === gameSlug);
+}
+
+// Helper function to get all game routes for static generation
+export function getAllGameRoutes() {
+    const routes = [];
+    members.forEach(member => {
+        if (member.games) {
+            member.games.forEach(game => {
+                routes.push({
+                    memberSlug: member.slug,
+                    gameSlug: game.slug,
+                    memberName: member.name,
+                    gameName: game.name,
+                    component: game.component
+                });
+            });
+        }
+    });
+    return routes;
 }
