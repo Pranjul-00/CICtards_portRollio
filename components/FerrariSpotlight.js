@@ -6,8 +6,7 @@ import Link from "next/link";
 const TOTAL_FRAMES = 240;
 const SCROLL_HEIGHT = 5000;
 
-// Contextual annotations based on Ferrari parts being revealed
-// Frame 1 starts with ENGINE, so map accordingly
+// Contextual annotations - ENGINE appears first (frame 1)
 const annotations = [
     {
         scrollStart: 0.0,
@@ -15,7 +14,7 @@ const annotations = [
         title: "ENGINE: CORE STRENGTH",
         description: "Full-stack development • System architecture • Backend mastery",
         position: { x: "15%", y: "35%" },
-        arrowFrom: { x: "50%", y: "50%" }, // Engine center
+        arrowFrom: { x: "50%", y: "50%" },
         color: "#CC0000"
     },
     {
@@ -24,7 +23,7 @@ const annotations = [
         title: "POWERTRAIN: PERFORMANCE",
         description: "Algorithm optimization • Scalable microservices • Cloud-native",
         position: { x: "75%", y: "30%" },
-        arrowFrom: { x: "55%", y: "55%" }, // Transmission area
+        arrowFrom: { x: "55%", y: "55%" },
         color: "#8B4513"
     },
     {
@@ -33,7 +32,7 @@ const annotations = [
         title: "COCKPIT: SKILLS & EXPERTISE",
         description: "React • Next.js • TypeScript • Modern frameworks • UI/UX design",
         position: { x: "10%", y: "55%" },
-        arrowFrom: { x: "45%", y: "40%" }, // Cockpit/steering
+        arrowFrom: { x: "45%", y: "40%" },
         color: "#CC0000"
     },
     {
@@ -42,7 +41,7 @@ const annotations = [
         title: "CHASSIS: FOUNDATION",
         description: "Solid architecture • Component design • Reusable systems",
         position: { x: "70%", y: "65%" },
-        arrowFrom: { x: "50%", y: "60%" }, // Chassis structure
+        arrowFrom: { x: "50%", y: "60%" },
         color: "#8B4513"
     },
     {
@@ -51,7 +50,7 @@ const annotations = [
         title: "AERODYNAMICS: EFFICIENCY",
         description: "Code optimization • Performance tuning • Best practices",
         position: { x: "20%", y: "25%" },
-        arrowFrom: { x: "52%", y: "35%" }, // Wings/aero
+        arrowFrom: { x: "52%", y: "35%" },
         color: "#CC0000"
     }
 ];
@@ -116,7 +115,7 @@ export default function FerrariSpotlight({ member }) {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
 
-            // Background color transition: dark to cream as user scrolls
+            // Background color transition: dark to cream
             const progress = smoothProgress.get();
             const bgR = Math.round(37 + (218 - 37) * progress);
             const bgG = Math.round(36 + (213 - 36) * progress);
@@ -124,24 +123,21 @@ export default function FerrariSpotlight({ member }) {
             ctx.fillStyle = `rgb(${bgR}, ${bgG}, ${bgB})`;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            // Calculate zoom based on scroll (start zoomed out, zoom in as you scroll)
-            const zoomFactor = 0.7 + (progress * 0.5); // Start at 70%, zoom to 120%
-
-            // Full-page Ferrari - TRUE COVER mode (fills entire viewport, no confinement)
+            // TRUE COVER MODE - Ferrari fills entire screen
             const imgAspect = img.width / img.height;
             const canvasAspect = canvas.width / canvas.height;
             let drawWidth, drawHeight, offsetX, offsetY;
 
-            // Cover: ensure image fills entire canvas (like CSS background-size: cover)
+            // Always fill the entire canvas (cover mode)
             if (imgAspect > canvasAspect) {
-                // Image is wider - fit to height and overflow width
-                drawHeight = canvas.height * zoomFactor;
+                // Image wider - fit to height, crop width
+                drawHeight = canvas.height;
                 drawWidth = drawHeight * imgAspect;
                 offsetX = (canvas.width - drawWidth) / 2;
                 offsetY = 0;
             } else {
-                // Image is taller - fit to width and overflow height
-                drawWidth = canvas.width * zoomFactor;
+                // Image taller - fit to width, crop height
+                drawWidth = canvas.width;
                 drawHeight = drawWidth / imgAspect;
                 offsetX = 0;
                 offsetY = (canvas.height - drawHeight) / 2;
@@ -149,7 +145,7 @@ export default function FerrariSpotlight({ member }) {
 
             ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
 
-            // Enhanced fog overlay around entire Ferrari to hide Veo watermark
+            // Fog overlay to hide Veo watermark
             // Bottom fog
             const bottomGradient = ctx.createLinearGradient(0, canvas.height - 200, 0, canvas.height);
             bottomGradient.addColorStop(0, `rgba(${bgR}, ${bgG}, ${bgB}, 0)`);
@@ -157,14 +153,14 @@ export default function FerrariSpotlight({ member }) {
             ctx.fillStyle = bottomGradient;
             ctx.fillRect(0, canvas.height - 200, canvas.width, 200);
 
-            // Right edge fog (where Veo logo appears)
+            // Right edge fog
             const rightGradient = ctx.createLinearGradient(canvas.width - 250, 0, canvas.width, 0);
             rightGradient.addColorStop(0, `rgba(${bgR}, ${bgG}, ${bgB}, 0)`);
             rightGradient.addColorStop(1, `rgba(${bgR}, ${bgG}, ${bgB}, 0.9)`);
             ctx.fillStyle = rightGradient;
             ctx.fillRect(canvas.width - 250, 0, 250, canvas.height);
 
-            // Top fog for balance
+            // Top fog
             const topGradient = ctx.createLinearGradient(0, 0, 0, 150);
             topGradient.addColorStop(0, `rgba(${bgR}, ${bgG}, ${bgB}, 0.7)`);
             topGradient.addColorStop(1, `rgba(${bgR}, ${bgG}, ${bgB}, 0)`);
@@ -205,25 +201,18 @@ export default function FerrariSpotlight({ member }) {
                 </div>
             )}
 
-            {/* Scrolling Canvas (not sticky) */}
+            {/* Main Content */}
             {isLoaded && (
                 <div className="relative w-full" style={{ height: `${SCROLL_HEIGHT}px` }}>
-                    {/* Canvas positioned sticky, follows scroll */}
+                    {/* Sticky Canvas */}
                     <div className="sticky top-0 left-0 w-full h-screen">
                         <canvas ref={canvasRef} className="w-full h-full" />
                     </div>
 
-                    {/* SVG Arrows Layer */}
+                    {/* SVG Arrows */}
                     <svg className="sticky top-0 left-0 w-full h-screen pointer-events-none" style={{ zIndex: 10 }}>
                         <defs>
-                            <marker
-                                id="arrowhead"
-                                markerWidth="8"
-                                markerHeight="8"
-                                refX="6"
-                                refY="3"
-                                orient="auto"
-                            >
+                            <marker id="arrowhead" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
                                 <polygon points="0 0, 6 3, 0 6" fill="#8B4513" />
                             </marker>
                         </defs>
@@ -237,13 +226,10 @@ export default function FerrariSpotlight({ member }) {
                                 1
                             );
 
-                            // Angular elbow arrow
                             const fromX = parseFloat(ann.arrowFrom.x);
                             const fromY = parseFloat(ann.arrowFrom.y);
                             const toX = parseFloat(ann.position.x);
                             const toY = parseFloat(ann.position.y);
-
-                            // Elbow path: horizontal then vertical
                             const midX = fromX + (toX - fromX) * 0.6;
 
                             return (
@@ -260,7 +246,7 @@ export default function FerrariSpotlight({ member }) {
                         })}
                     </svg>
 
-                    {/* Contextual Info Cards */}
+                    {/* Info Cards with Inverse Colors */}
                     {annotations.map((ann, i) => {
                         const progress = smoothProgress.get();
                         if (progress < ann.scrollStart || progress > ann.scrollEnd) return null;
@@ -271,61 +257,61 @@ export default function FerrariSpotlight({ member }) {
                             1
                         );
 
+                        // Calculate inverse colors
+                        const bgR = Math.round(37 + (218 - 37) * progress);
+                        const bgG = Math.round(36 + (213 - 36) * progress);
+                        const bgB = Math.round(35 + (208 - 35) * progress);
+
+                        const cardBgR = 255 - bgR;
+                        const cardBgG = 255 - bgG;
+                        const cardBgB = 255 - bgB;
+
+                        const cardTextR = bgR;
+                        const cardTextG = bgG;
+                        const cardTextB = bgB;
+
                         return (
                             <motion.div
                                 key={i}
-                                className="absolute bg-white/95 border-3 p-5 rounded-lg shadow-2xl max-w-sm"
+                                className="absolute p-3 rounded shadow-2xl max-w-sm"
                                 style={{
                                     left: ann.position.x,
                                     top: ann.position.y,
                                     opacity,
                                     zIndex: 20,
+                                    backgroundColor: `rgba(${cardBgR}, ${cardBgG}, ${cardBgB}, 0.95)`,
                                     borderColor: ann.color,
-                                    borderWidth: '3px'
+                                    borderWidth: '2px',
+                                    borderStyle: 'solid',
+                                    fontFamily: 'var(--font-family-mono)',
+                                    fontSize: 'var(--font-size)',
+                                    userSelect: 'none'
                                 }}
                                 initial={{ scale: 0.8, opacity: 0 }}
                                 animate={{ scale: 1, opacity }}
                                 transition={{ duration: 0.3 }}
                             >
-                                <h3 className="text-xl font-black mb-2"
+                                <h3 className="font-bold mb-2"
                                     style={{
-                                        fontFamily: 'JetBrains Mono, monospace',
-                                        color: ann.color
+                                        fontFamily: 'var(--font-family-mono)',
+                                        fontSize: '13px',
+                                        color: ann.color,
+                                        letterSpacing: '0.5px'
                                     }}>
                                     {ann.title}
                                 </h3>
-                                <p className="text-sm leading-relaxed"
+                                <p className="leading-relaxed"
                                     style={{
-                                        fontFamily: 'JetBrains Mono, monospace',
-                                        color: '#8B4513'
+                                        fontFamily: 'var(--font-family-mono)',
+                                        fontSize: 'var(--font-size)',
+                                        color: `rgb(${cardTextR}, ${cardTextG}, ${cardTextB})`,
+                                        lineHeight: '1.4'
                                     }}>
                                     {ann.description}
                                 </p>
                             </motion.div>
                         );
                     })}
-
-                    {/* Header */}
-                    <div className="absolute top-8 left-1/2 transform -translate-x-1/2 text-center z-30">
-                        <motion.h1
-                            className="text-6xl font-black text-[#CC0000] mb-2 drop-shadow-lg"
-                            style={{ fontFamily: 'JetBrains Mono, monospace' }}
-                            initial={{ opacity: 0, y: -20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.5 }}
-                        >
-                            PRANJUL GUPTA
-                        </motion.h1>
-                        <motion.p
-                            className="text-xl text-[#8B4513] font-bold"
-                            style={{ fontFamily: 'JetBrains Mono, monospace' }}
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 0.7 }}
-                        >
-                            Lead Architect & Full-Stack Engineer
-                        </motion.p>
-                    </div>
 
                     {/* Footer Links */}
                     <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex gap-4 z-30">
@@ -342,12 +328,18 @@ export default function FerrariSpotlight({ member }) {
                         </a>
                     </div>
 
-                    {/* Scroll indicator */}
+                    {/* Scroll Indicator */}
                     <motion.div
-                        className="absolute top-1/2 right-8 text-[#8B4513]/60 text-sm z-30"
-                        style={{ fontFamily: 'JetBrains Mono, monospace' }}
+                        className="absolute top-1/2 right-8 z-30"
+                        style={{
+                            fontFamily: 'var(--font-family-mono)',
+                            fontSize: 'var(--font-size)',
+                            color: '#ebebeb',
+                            opacity: 0.6,
+                            userSelect: 'none'
+                        }}
                         initial={{ opacity: 0 }}
-                        animate={{ opacity: smoothProgress.get() < 0.1 ? 1 : 0 }}
+                        animate={{ opacity: smoothProgress.get() < 0.1 ? 0.6 : 0 }}
                     >
                         SCROLL ↓
                     </motion.div>
