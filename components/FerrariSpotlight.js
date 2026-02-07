@@ -6,52 +6,23 @@ import Link from "next/link";
 const TOTAL_FRAMES = 240;
 const SCROLL_HEIGHT = 5000;
 
-// Contextual annotations - ENGINE appears first (frame 1)
+// Section 1: Only ENGINE (strengths) and COCKPIT (skills)
 const annotations = [
     {
         scrollStart: 0.0,
-        scrollEnd: 0.25,
-        title: "ENGINE: CORE STRENGTH",
-        description: "Full-stack development • System architecture • Backend mastery",
-        position: { x: "15%", y: "35%" },
-        arrowFrom: { x: "50%", y: "50%" },
-        color: "#CC0000"
-    },
-    {
-        scrollStart: 0.2,
         scrollEnd: 0.4,
-        title: "POWERTRAIN: PERFORMANCE",
-        description: "Algorithm optimization • Scalable microservices • Cloud-native",
-        position: { x: "75%", y: "30%" },
-        arrowFrom: { x: "55%", y: "55%" },
-        color: "#8B4513"
+        title: "ENGINE: CORE STRENGTHS",
+        description: "Full-stack development • System architecture • Backend mastery • Problem solving",
+        position: { x: "15%", y: "35%" },
+        color: "#CC0000"
     },
     {
         scrollStart: 0.35,
-        scrollEnd: 0.6,
-        title: "COCKPIT: SKILLS & EXPERTISE",
-        description: "React • Next.js • TypeScript • Modern frameworks • UI/UX design",
-        position: { x: "10%", y: "55%" },
-        arrowFrom: { x: "45%", y: "40%" },
-        color: "#CC0000"
-    },
-    {
-        scrollStart: 0.55,
-        scrollEnd: 0.75,
-        title: "CHASSIS: FOUNDATION",
-        description: "Solid architecture • Component design • Reusable systems",
-        position: { x: "70%", y: "65%" },
-        arrowFrom: { x: "50%", y: "60%" },
-        color: "#8B4513"
-    },
-    {
-        scrollStart: 0.7,
         scrollEnd: 0.95,
-        title: "AERODYNAMICS: EFFICIENCY",
-        description: "Code optimization • Performance tuning • Best practices",
-        position: { x: "20%", y: "25%" },
-        arrowFrom: { x: "52%", y: "35%" },
-        color: "#CC0000"
+        title: "COCKPIT: SKILLS & EXPERTISE",
+        description: "React • Next.js • TypeScript • Node.js • Modern frameworks • UI/UX design",
+        position: { x: "70%", y: "55%" },
+        color: "#00FF41"
     }
 ];
 
@@ -335,40 +306,39 @@ export default function FerrariSpotlight({ member }) {
                                 </motion.div>
                             );
                         })}
-                    </div>
 
-                    {/* Footer Links */}
-                    <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex gap-4 z-30">
-                        <Link href="/#team">
-                            <div className="px-4 py-2 bg-[#1f1f1f] text-[#ebebeb] font-bold border border-[#424242] hover:bg-[#4f4f4f] transition-all cursor-pointer shadow-lg"
+                        {/* Footer Links */}
+                        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex gap-4 z-30">
+                            <Link href="/#team">
+                                <div className="px-4 py-2 bg-[#1f1f1f] text-[#ebebeb] font-bold border border-[#424242] hover:bg-[#4f4f4f] transition-all cursor-pointer shadow-lg"
+                                    style={{ fontFamily: 'var(--font-family-mono)', fontSize: 'var(--font-size)', userSelect: 'none' }}>
+                                    ← BACK TO TEAM
+                                </div>
+                            </Link>
+                            <a href="https://github.com/pranjul" target="_blank" rel="noopener noreferrer"
+                                className="px-4 py-2 bg-[#424242] text-[#ebebeb] font-bold border border-[#595959] hover:bg-[#595959] transition-all shadow-lg"
                                 style={{ fontFamily: 'var(--font-family-mono)', fontSize: 'var(--font-size)', userSelect: 'none' }}>
-                                ← BACK TO TEAM
-                            </div>
-                        </Link>
-                        <a href="https://github.com/pranjul" target="_blank" rel="noopener noreferrer"
-                            className="px-4 py-2 bg-[#424242] text-[#ebebeb] font-bold border border-[#595959] hover:bg-[#595959] transition-all shadow-lg"
-                            style={{ fontFamily: 'var(--font-family-mono)', fontSize: 'var(--font-size)', userSelect: 'none' }}>
-                            GITHUB →
-                        </a>
-                    </div>
+                                GITHUB →
+                            </a>
+                        </div>
 
-                    {/* Scroll Indicator */}
-                    <motion.div
-                        className="absolute top-1/2 right-8 z-30"
-                        style={{
-                            fontFamily: 'var(--font-family-mono)',
-                            fontSize: 'var(--font-size)',
-                            color: '#ebebeb',
-                            opacity: 0.6,
-                            userSelect: 'none'
-                        }}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: currentProgress < 0.1 ? 0.6 : 0 }}
-                    >
-                        SCROLL ↓
-                    </motion.div>
-                </div>
+                        {/* Scroll Indicator */}
+                        <motion.div
+                            className="absolute top-1/2 right-8 z-30"
+                            style={{
+                                fontFamily: 'var(--font-family-mono)',
+                                fontSize: 'var(--font-size)',
+                                color: '#ebebeb',
+                                opacity: 0.6,
+                                userSelect: 'none'
+                            }}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: currentProgress < 0.1 ? 0.6 : 0 }}
+                        >
+                            SCROLL ↓
+                        </motion.div>
+                    </div>
             )}
-        </div>
-    );
+                </div>
+            );
 }
