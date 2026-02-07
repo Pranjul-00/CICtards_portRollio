@@ -224,19 +224,19 @@ export default function FerrariSpotlight({ member }) {
                             />
                         </motion.div>
 
-                        {/* LH Helmet - top right */}
+                        {/* LH Helmet - positioned on head */}
                         <motion.div
-                            className="absolute top-20 right-20"
-                            style={{ zIndex: 3 }}
-                            initial={{ opacity: 0, rotate: -20, scale: 0.8 }}
-                            animate={{ opacity: 1, rotate: 0, scale: 1 }}
-                            transition={{ duration: 0.8, delay: 0.6 }}
+                            className="absolute inset-0 flex items-start justify-center pt-[12vh]"
+                            style={{ zIndex: 4 }}
+                            initial={{ opacity: 0, y: -50 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8, delay: 0.8 }}
                         >
                             <img
                                 src="/LH_2025_helmet-1-removebg-preview.png"
                                 alt="LH Helmet"
-                                className="w-64 h-64 object-contain"
-                                style={{ filter: 'drop-shadow(0 5px 15px rgba(0,0,0,0.2))' }}
+                                className="w-[35vh] h-[35vh] object-contain drop-shadow-2xl"
+                                style={{ transform: 'rotate(-5deg)' }}
                             />
                         </motion.div>
 
