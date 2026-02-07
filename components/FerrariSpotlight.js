@@ -1,6 +1,5 @@
-"use client";
 import { useEffect, useRef, useState } from "react";
-import { useScroll, useSpring, useTransform, motion } from "framer-motion";
+import { useScroll, useSpring, useTransform, motion, useMotionValueEvent } from "framer-motion";
 import Link from "next/link";
 
 const TOTAL_FRAMES = 240;
@@ -61,6 +60,7 @@ export default function FerrariSpotlight({ member }) {
     const [images, setImages] = useState([]);
     const [loadingProgress, setLoadingProgress] = useState(0);
     const [isLoaded, setIsLoaded] = useState(false);
+    const [currentProgress, setCurrentProgress] = useState(0);
 
     const { scrollYProgress } = useScroll({
         target: containerRef,
@@ -74,6 +74,11 @@ export default function FerrariSpotlight({ member }) {
     });
 
     const frameIndex = useTransform(smoothProgress, [0, 1], [0, TOTAL_FRAMES - 1]);
+
+    // Track progress changes to trigger re-renders
+    useMotionValueEvent(smoothProgress, "change", (latest) => {
+        setCurrentProgress(latest);
+    });
 
     // Preload frames
     useEffect(() => {
@@ -221,12 +226,11 @@ export default function FerrariSpotlight({ member }) {
                             </marker>
                         </defs>
                         {annotations.map((ann, i) => {
-                            const progress = smoothProgress.get();
-                            if (progress < ann.scrollStart || progress > ann.scrollEnd) return null;
+                            if (currentProgress < ann.scrollStart || currentProgress > ann.scrollEnd) return null;
 
                             const opacity = Math.min(
-                                (progress - ann.scrollStart) / 0.03,
-                                (ann.scrollEnd - progress) / 0.03,
+                                (currentProgress - ann.scrollStart) / 0.03,
+                                (ann.scrollEnd - currentProgress) / 0.03,
                                 1
                             );
 
