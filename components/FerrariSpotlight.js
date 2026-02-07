@@ -241,10 +241,15 @@ export default function FerrariSpotlight({ member }) {
             {/* Main Content - Ferrari */}
             {isLoaded && (
                 <div className="relative w-full" style={{ height: `${SCROLL_HEIGHT}px` }}>
-                    {/* Sticky Canvas */}
-                    <div className="sticky top-0 left-0 w-full h-screen">
+                    {/* Sticky Canvas with fade-in */}
+                    <motion.div
+                        className="sticky top-0 left-0 w-full h-screen"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 1.5, ease: "easeInOut" }}
+                    >
                         <canvas ref={canvasRef} className="w-full h-full" />
-                    </div>
+                    </motion.div>
 
                     {/* SVG Arrows */}
                     <svg className="sticky top-0 left-0 w-full h-screen pointer-events-none" style={{ zIndex: 10 }}>
