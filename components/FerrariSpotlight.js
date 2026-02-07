@@ -256,7 +256,7 @@ export default function FerrariSpotlight({ member }) {
                                     top: ann.position.y,
                                     opacity,
                                     zIndex: 20,
-                                    backgroundColor: `rgba(${cardBgR}, ${cardBgG}, ${cardBgB}, 0.95)`,
+                                    backgroundColor: `rgba(${cardBgR}, ${cardBgG}, ${cardBgB}, 1.0)`,
                                     borderColor: ann.color,
                                     borderWidth: '2px',
                                     borderStyle: 'solid',
