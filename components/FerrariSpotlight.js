@@ -187,7 +187,7 @@ export default function FerrariSpotlight({ member }) {
             {/* Loading Screen */}
             {!isLoaded && (
                 <div className="fixed inset-0 flex flex-col items-center justify-center z-50" style={{ backgroundColor: 'rgb(37, 36, 35)' }}>
-                    <div className="text-6xl font-black text-[#CC0000] mb-4" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
+                    <div className="text-6xl font-black text-[#CC0000] mb-4" style={{ fontFamily: 'var(--font-family-mono)', userSelect: 'none' }}>
                         {loadingProgress}%
                     </div>
                     <div className="w-64 h-2 bg-gray-700 rounded-full overflow-hidden">
@@ -197,7 +197,7 @@ export default function FerrariSpotlight({ member }) {
                             animate={{ width: `${loadingProgress}%` }}
                         />
                     </div>
-                    <div className="text-sm text-gray-400 mt-4" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
+                    <div className="text-sm text-gray-400 mt-4" style={{ fontFamily: 'var(--font-family-mono)', fontSize: 'var(--font-size)', userSelect: 'none' }}>
                         LOADING FERRARI SF-26
                     </div>
                 </div>
@@ -328,14 +328,14 @@ export default function FerrariSpotlight({ member }) {
                     {/* Footer Links */}
                     <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex gap-4 z-30">
                         <Link href="/#team">
-                            <div className="px-6 py-3 bg-[#8B4513] text-white font-bold border-2 border-[#8B4513] hover:bg-white hover:text-[#8B4513] transition-all cursor-pointer shadow-lg"
-                                style={{ fontFamily: 'JetBrains Mono, monospace' }}>
+                            <div className="px-4 py-2 bg-[#1f1f1f] text-[#ebebeb] font-bold border border-[#424242] hover:bg-[#4f4f4f] transition-all cursor-pointer shadow-lg"
+                                style={{ fontFamily: 'var(--font-family-mono)', fontSize: 'var(--font-size)', userSelect: 'none' }}>
                                 ← BACK TO TEAM
                             </div>
                         </Link>
                         <a href="https://github.com/pranjul" target="_blank" rel="noopener noreferrer"
-                            className="px-6 py-3 bg-white text-[#8B4513] font-bold border-2 border-[#8B4513] hover:bg-[#8B4513] hover:text-white transition-all shadow-lg"
-                            style={{ fontFamily: 'JetBrains Mono, monospace' }}>
+                            className="px-4 py-2 bg-[#424242] text-[#ebebeb] font-bold border border-[#595959] hover:bg-[#595959] transition-all shadow-lg"
+                            style={{ fontFamily: 'var(--font-family-mono)', fontSize: 'var(--font-size)', userSelect: 'none' }}>
                             GITHUB →
                         </a>
                     </div>
