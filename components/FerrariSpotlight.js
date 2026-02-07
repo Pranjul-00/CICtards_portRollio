@@ -195,11 +195,11 @@ export default function FerrariSpotlight({ member }) {
                 </div>
             )}
 
-            {/* Hero Section - Content (Split layers for Trail to sit in between) */}
+            {/* Hero Section - Content (Hamilton with Scratchable Helmet Overlay) */}
             {isLoaded && (
-                <div className="relative w-full overflow-hidden" style={{ height: `${HERO_HEIGHT}px`, pointerEvents: 'none' }}> {/* Removed z-index to allow internal stacking */}
+                <div className="relative w-full overflow-hidden" style={{ height: `${HERO_HEIGHT}px`, pointerEvents: 'none' }}>
 
-                    {/* Layer 1: "44" Text (z-5) - Below Trail */}
+                    {/* Layer 1: "44" Text (z-5) - Background decoration */}
                     <div className="sticky top-0 left-0 w-full h-screen flex items-center justify-center" style={{ zIndex: 5 }}>
                         <h1 className="text-[40vw] font-black select-none"
                             style={{
@@ -212,13 +212,13 @@ export default function FerrariSpotlight({ member }) {
                         </h1>
                     </div>
 
-                    {/* Layer 2: Hamilton & Helmet (z-20) - Above Trail (Eraser Effect) */}
-                    <div className="absolute top-0 left-0 w-full h-full"> {/* Absolute wrapper to overlay exactly */}
+                    {/* Layer 2: Main Scratch Interaction (z-40) */}
+                    <div className="absolute top-0 left-0 w-full h-full">
                         <div className="sticky top-0 left-0 w-full h-screen">
-                            {/* Hamilton image */}
+                            {/* Hamilton Face (Base Layer) - z-index 40 */}
                             <motion.div
                                 className="absolute inset-0 flex items-end justify-center pointer-events-none"
-                                style={{ zIndex: 20 }}
+                                style={{ zIndex: 40 }}
                                 initial={{ opacity: 0, y: 50 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 1, delay: 0.3 }}
@@ -226,24 +226,25 @@ export default function FerrariSpotlight({ member }) {
                                 <img
                                     src="/hamilton.png"
                                     alt="Lewis Hamilton"
-                                    className="h-[90vh] object-contain pointer-events-auto"
+                                    className="h-[90vh] object-contain pointer-events-none" // Base image is not interactive
                                     style={{ filter: 'drop-shadow(0 10px 30px rgba(0,0,0,0.3))' }}
                                 />
                             </motion.div>
 
-                            {/* LH Helmet */}
+                            {/* Scratchable Helmet (Top Layer) - z-index 50 */}
+                            {/* SCRATCH REVEAL: This canvas sits on top. Cursor erases it to reveal Hamilton below. */}
                             <motion.div
-                                className="absolute inset-0 flex items-start justify-center -mt-[10vh] pointer-events-none"
-                                style={{ zIndex: 20 }}
+                                className="absolute inset-0 flex items-start justify-center -mt-[10vh] pointer-events-auto" // Interactive layer!
+                                style={{ zIndex: 50 }}
                                 initial={{ opacity: 0, scale: 0.8 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 transition={{ duration: 0.8, delay: 0.8, type: "spring" }}
                             >
-                                <img
+                                <ScratchRevealImage
                                     src="/LH_2025_helmet-1-removebg-preview.png"
-                                    alt="LH Helmet"
-                                    className="w-[105vh] h-[105vh] object-contain drop-shadow-2xl pointer-events-auto"
-                                    style={{ transform: 'rotate(0deg)' }}
+                                    width={window.innerWidth} // Pass window dimensions for crisp canvas
+                                    height={window.innerHeight}
+                                    className="w-[105vh] h-[105vh] object-contain drop-shadow-2xl cursor-crosshair"
                                 />
                             </motion.div>
                         </div>
