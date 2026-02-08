@@ -12,11 +12,11 @@ const SCROLL_HEIGHT = 6000; // Total scrollable height
 // Section 1: Only ENGINE (strengths) and COCKPIT (skills)
 const annotations = [
     {
-        scrollStart: 0.50,
-        scrollEnd: 0.60,
-        title: "ENGINE: POWER UNIT",
-        description: "1.6L V6 Turbo Hybrid • 1000+ HP • 15,000 RPM • Thermal Efficiency > 50%",
-        position: { x: "15%", y: "60%" }, // Bottom left
+        scrollStart: 0.48, // 0s
+        scrollEnd: 0.54,
+        title: "ENGINE: CORE STRENGTHS",
+        description: "Full-stack development • System architecture • Backend mastery • Problem solving",
+        position: { x: "15%", y: "60%" },
         color: "#CC0000"
     },
     {
