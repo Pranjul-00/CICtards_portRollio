@@ -237,10 +237,37 @@ export default function FerrariSpotlightVideo({ member }) {
         return () => unsubscribe();
     }, [isLoaded, ferrariProgress]);
 
-    // Handle video load
-    const handleVideoLoaded = () => {
-        setIsLoaded(true);
-    };
+    // Handle video load with multiple event listeners and fallback
+    useEffect(() => {
+        const video = videoRef.current;
+        if (!video) return;
+
+        const handleLoaded = () => {
+            setIsLoaded(true);
+        };
+
+        // Try multiple events
+        video.addEventListener('canplaythrough', handleLoaded);
+        video.addEventListener('loadeddata', handleLoaded);
+        video.addEventListener('canplay', handleLoaded);
+
+        // Fallback timeout - if video takes too long, just show it anyway
+        const timeout = setTimeout(() => {
+            setIsLoaded(true);
+        }, 3000);
+
+        // Check if already loaded
+        if (video.readyState >= 3) {
+            setIsLoaded(true);
+        }
+
+        return () => {
+            video.removeEventListener('canplaythrough', handleLoaded);
+            video.removeEventListener('loadeddata', handleLoaded);
+            video.removeEventListener('canplay', handleLoaded);
+            clearTimeout(timeout);
+        };
+    }, []);
 
     return (
         <div ref={containerRef} className="relative" style={{ height: `${SCROLL_HEIGHT}px`, backgroundColor: 'rgb(37, 36, 35)' }}>
@@ -278,7 +305,6 @@ export default function FerrariSpotlightVideo({ member }) {
                         muted
                         playsInline
                         preload="auto"
-                        onLoadedData={handleVideoLoaded}
                         className="absolute inset-0 w-full h-full object-cover"
                         style={{ backgroundColor: 'rgb(37, 36, 35)' }}
                     />
