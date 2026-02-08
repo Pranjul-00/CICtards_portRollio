@@ -469,8 +469,8 @@ export default function FerrariSpotlightVideo({ member }) {
 
                 {/* Transition Area (Blackout) - Don't snap here, let user scroll through */}
 
-                {/* 1. Engine (0-1s -> ~50-51%) - Widen target to catch scroll early */}
-                <div className="absolute w-full" style={{ top: '40%', height: '12%', scrollSnapAlign: 'end', scrollSnapStop: 'always' }} />
+                {/* 1. Engine (0-1s -> ~52-60%) - Starts AFTER video fade in at 0.50-0.52 */}
+                <div className="absolute w-full" style={{ top: '52%', height: '8%', scrollSnapAlign: 'start', scrollSnapStop: 'always' }} />
 
                 {/* 2. Cockpit (4-6s -> ~55-58%) */}
                 <div className="absolute w-full" style={{ top: '56%', height: '3%', scrollSnapAlign: 'center', scrollSnapStop: 'always' }} />
