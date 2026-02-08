@@ -39,7 +39,7 @@ export const members = [
     },
     {
         id: 5,
-        name: "Mohd. Ovesh",
+        name: "Ovesh",
         role: "",
         bio: `Optimizing performance and security. ${sharedBio}`,
         skills: ["Backend Development", "Database Design", "API Security", "DevOps"],
