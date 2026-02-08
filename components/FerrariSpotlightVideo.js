@@ -12,20 +12,44 @@ const SCROLL_HEIGHT = 6000; // Total scrollable height
 // Section 1: Only ENGINE (strengths) and COCKPIT (skills)
 const annotations = [
     {
-        scrollStart: 0.3,
-        scrollEnd: 0.55,
-        title: "ENGINE: CORE STRENGTHS",
-        description: "Full-stack development • System architecture • Backend mastery • Problem solving",
-        position: { x: "15%", y: "35%" },
+        scrollStart: 0.50,
+        scrollEnd: 0.60,
+        title: "ENGINE: POWER UNIT",
+        description: "1.6L V6 Turbo Hybrid • 1000+ HP • 15,000 RPM • Thermal Efficiency > 50%",
+        position: { x: "15%", y: "60%" }, // Bottom left
         color: "#CC0000"
     },
     {
-        scrollStart: 0.6,
-        scrollEnd: 0.95,
-        title: "COCKPIT: SKILLS & EXPERTISE",
-        description: "React • Next.js • TypeScript • Node.js • Modern frameworks • UI/UX design",
-        position: { x: "70%", y: "55%" },
+        scrollStart: 0.60,
+        scrollEnd: 0.70,
+        title: "COCKPIT: CONTROL CENTER",
+        description: "Carbon Fibre Monocoque • Halo Protection • Biometric Sensors • 20+ Control Buttons",
+        position: { x: "70%", y: "30%" }, // Top right
         color: "#00FF41"
+    },
+    {
+        scrollStart: 0.70,
+        scrollEnd: 0.80,
+        title: "AERODYNAMICS: FRONT WING",
+        description: "Ground Effect Venturi Tunnels • Active Aero • DRS System • Negative Lift Generation",
+        position: { x: "10%", y: "40%" },
+        color: "#FFFF00"
+    },
+    {
+        scrollStart: 0.80,
+        scrollEnd: 0.90,
+        title: "REAR: EXHAUST & DIFFUSER",
+        description: "Blown Diffuser Effect • Wastegate Pipes • Rain Light • Crash Structure",
+        position: { x: "65%", y: "70%" },
+        color: "#FF2800"
+    },
+    {
+        scrollStart: 0.90,
+        scrollEnd: 0.99,
+        title: "TEAM: PIT CREW",
+        description: "Sub-2 Second Stops • 20+ Crew Members • Precision Engineering • Strategy Command",
+        position: { x: "50%", y: "85%" }, // Bottom center
+        color: "#FFFFFF"
     }
 ];
 
@@ -437,6 +461,40 @@ export default function FerrariSpotlightVideo({ member }) {
                     );
                 })}
             </div>
+
+            {/* SCROLL SNAP TARGETS - Invisible elements to anchor scroll positions */}
+            <div className="absolute inset-0 pointer-events-none" style={{ height: `${SCROLL_HEIGHT}px` }}>
+                {/* Hero / Start */}
+                <div className="absolute w-full" style={{ top: '0%', height: '25%', scrollSnapAlign: 'start', scrollSnapStop: 'always' }} />
+
+                {/* Transition Area (Blackout) - Don't snap here, let user scroll through */}
+
+                {/* 1. Engine (0-1s -> ~50-51%) */}
+                <div className="absolute w-full" style={{ top: '50%', height: '2%', scrollSnapAlign: 'start', scrollSnapStop: 'always' }} />
+
+                {/* 2. Cockpit (4-6s -> ~55-58%) */}
+                <div className="absolute w-full" style={{ top: '56%', height: '3%', scrollSnapAlign: 'center', scrollSnapStop: 'always' }} />
+
+                {/* 3. Front Car (15s -> ~70%) */}
+                <div className="absolute w-full" style={{ top: '70%', height: '3%', scrollSnapAlign: 'center', scrollSnapStop: 'always' }} />
+
+                {/* 4. Back Car (23s -> ~81%) */}
+                <div className="absolute w-full" style={{ top: '81%', height: '3%', scrollSnapAlign: 'center', scrollSnapStop: 'always' }} />
+
+                {/* 5. Pitstop (29s -> ~89%) */}
+                <div className="absolute w-full" style={{ top: '89%', height: '3%', scrollSnapAlign: 'center', scrollSnapStop: 'always' }} />
+
+                {/* 6. Outside (36s -> ~98%) */}
+                <div className="absolute w-full" style={{ top: '99%', height: '1%', scrollSnapAlign: 'end', scrollSnapStop: 'always' }} />
+            </div>
+
+            {/* Global Styles for Scroll Snap */}
+            <style jsx global>{`
+                html {
+                    scroll-snap-type: y mandatory;
+                    scroll-behavior: smooth;
+                }
+            `}</style>
 
             {/* Navigation */}
             <Link
