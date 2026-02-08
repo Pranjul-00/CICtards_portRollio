@@ -5,7 +5,7 @@ import Link from "next/link";
 import CursorTrail from "./ui/CursorTrail";
 import ScratchRevealImage from "./ui/ScratchRevealImage";
 
-const TOTAL_FRAMES = 240; // New PNG frames
+const TOTAL_FRAMES = 480; // PNG frames (Formula1 + Formula2)
 const FRAME_EXTENSION = 'png'; // Changed from jpg to png
 const HERO_HEIGHT = 1000; // Hero section height
 const SCROLL_HEIGHT = 6000; // Total scrollable height
@@ -244,12 +244,9 @@ export default function FerrariSpotlight({ member }) {
                     <div className="absolute top-0 left-0 w-full h-full" style={{ zIndex: 40, pointerEvents: 'none' }}>
                         <div className="sticky top-0 left-0 w-full h-screen">
                             {/* Hamilton Face (Base Layer) - z-index 40 */}
-                            <motion.div
-                                className="absolute inset-0 flex items-end justify-center pointer-events-auto" // Re-enable interaction
+                            <div
+                                className="absolute inset-0 flex items-end justify-center pointer-events-auto"
                                 style={{ zIndex: 40 }}
-                                initial={{ opacity: 0, y: 50 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 1, delay: 0.3 }}
                             >
                                 <img
                                     src="/hamilton.png"
@@ -259,16 +256,13 @@ export default function FerrariSpotlight({ member }) {
                                     onMouseEnter={() => setIsHoveringInteractable(true)}
                                     onMouseLeave={() => setIsHoveringInteractable(false)}
                                 />
-                            </motion.div>
+                            </div>
 
                             {/* Scratchable Helmet (Top Layer) - z-index 50 */}
                             {/* SCRATCH REVEAL: This canvas sits on top. Cursor erases it to reveal Hamilton below. */}
-                            <motion.div
-                                className="absolute inset-0 flex items-start justify-center -mt-[10vh] pointer-events-auto" // Interactive layer!
+                            <div
+                                className="absolute inset-0 flex items-start justify-center -mt-[10vh] pointer-events-auto"
                                 style={{ zIndex: 50 }}
-                                initial={{ opacity: 0, scale: 0.8 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                transition={{ duration: 0.8, delay: 0.8, type: "spring" }}
                             >
                                 <ScratchRevealImage
                                     src="/LH_2025_helmet-1-removebg-preview.png"
@@ -278,7 +272,7 @@ export default function FerrariSpotlight({ member }) {
                                     onMouseEnter={() => setIsHoveringInteractable(true)}
                                     onMouseLeave={() => setIsHoveringInteractable(false)}
                                 />
-                            </motion.div>
+                            </div>
                         </div>
                     </div>
                 </motion.div>
