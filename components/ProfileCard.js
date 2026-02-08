@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import GeometricAvatar from "./ui/GeometricAvatar";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -31,6 +32,9 @@ export default function ProfileCard({ member }) {
 
                 <h1 className="card-fullname">{member.name}</h1>
                 <h2 className="card-jobtitle">{member.role}</h2>
+                {member.title && (
+                    <h3 className="card-nickname">{member.title}</h3>
+                )}
             </div>
 
             {/* Main Content */}
@@ -39,6 +43,11 @@ export default function ProfileCard({ member }) {
                 {/* ABOUT SECTION */}
                 <div className={`card-section ${activeTab === 'about' ? 'is-active' : ''}`} id="about">
                     <div className="card-content">
+                        {member.quote && (
+                            <div className="card-quote">
+                                "{member.quote}"
+                            </div>
+                        )}
                         <div className="card-subtitle">ABOUT</div>
                         <p className="card-desc font-mono text-xs md:text-sm leading-relaxed text-arcade-text/80">
                             {member.bio}
@@ -79,9 +88,9 @@ export default function ProfileCard({ member }) {
                                 Contact via Portfolio
                             </div>
 
-                            <a href={member.portfolio} target="_blank" rel="noopener noreferrer" className="contact-me">
+                            <Link href={`/team/${member.name.toLowerCase().replace(/\s+/g, '-')}`} className="contact-me">
                                 VIEW FULL PORTFOLIO
-                            </a>
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -217,6 +226,10 @@ export default function ProfileCard({ member }) {
                     font-size: 10px;
                 }
 
+                .card-header.is-active .card-nickname {
+                    display: none; /* Hide nickname when header collapsed */
+                }
+
                 .card-cover {
                     width: 100%;
                     height: 100%;
@@ -276,6 +289,35 @@ export default function ProfileCard({ member }) {
                     transform: translateX(-50%) translateY(-7px);
                     color: var(--color-neon-red);
                     transition: 0.3s;
+                }
+
+                .card-nickname {
+                    position: absolute;
+                    bottom: 0;
+                    font-size: 13px;
+                    font-weight: 700;
+                    text-transform: uppercase;
+                    letter-spacing: 1px;
+                    margin: 0;
+                    left: 50%;
+                    transform: translateX(-50%) translateY(14px); /* Position BELOW the job title/name area */
+                    color: var(--color-neon-pink);
+                    text-shadow: 0 0 5px var(--color-neon-pink);
+                    transition: 0.3s;
+                    white-space: nowrap;
+                }
+
+                .card-quote {
+                    background: rgba(255, 255, 0, 0.1);
+                    border-left: 2px solid var(--color-neon-yellow);
+                    color: var(--color-neon-yellow);
+                    padding: 8px 12px;
+                    font-style: italic;
+                    font-size: 12px;
+                    margin-bottom: 20px;
+                    border-radius: 0 4px 4px 0;
+                    font-weight: 600;
+                    text-shadow: 0 0 5px rgba(255, 255, 0, 0.3);
                 }
 
                 .card-main {
@@ -486,7 +528,7 @@ export default function ProfileCard({ member }) {
                     color: var(--color-neon-red);
                 }
 
-                .contact-me {
+                .card :global(.contact-me) {
                     border: 0;
                     outline: none;
                     background: linear-gradient(
@@ -509,7 +551,7 @@ export default function ProfileCard({ member }) {
                     text-decoration: none;
                 }
                 
-                .contact-me:hover {
+                .card :global(.contact-me:hover) {
                     box-shadow: 0 0 15px var(--color-neon-red);
                 }
             `}</style>

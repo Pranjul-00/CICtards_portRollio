@@ -70,7 +70,7 @@ export default function MemberCard({ member, index }) {
                     <div
                         className="mt-auto block w-full py-2 bg-neon-cyan text-black font-bold text-[10px] text-center border-b-4 border-cyan-800 active:border-0 active:mt-[2px] hover:bg-cyan-400 transition-none uppercase tracking-widest"
                     >
-                        VIEW PROFILE →
+                        SEE PORTFOLIO →
                     </div>
 
                 </div>

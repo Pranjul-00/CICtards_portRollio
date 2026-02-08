@@ -12,44 +12,52 @@ const SCROLL_HEIGHT = 6000; // Total scrollable height
 // Section 1: Only ENGINE (strengths) and COCKPIT (skills)
 const annotations = [
     {
-        scrollStart: 0.48, // 0s
-        scrollEnd: 0.54,
+        scrollStart: 0.4854,
+        scrollEnd: 0.5469,
         title: "ENGINE: CORE STRENGTHS",
         description: "Full-stack development • System architecture • Backend mastery • Problem solving",
         position: { x: "15%", y: "60%" },
         color: "#CC0000"
     },
     {
-        scrollStart: 0.60,
-        scrollEnd: 0.70,
-        title: "COCKPIT: CONTROL CENTER",
-        description: "Carbon Fibre Monocoque • Halo Protection • Biometric Sensors • 20+ Control Buttons",
+        scrollStart: 0.5874,
+        scrollEnd: 0.6602,
+        title: "COCKPIT: TECHNICAL SKILLS", // Updated for Pranjul
+        description: "Robotics • AI/ML • Python • System Design", // Mapped from members.js
         position: { x: "70%", y: "30%" }, // Top right
         color: "#00FF41"
     },
     {
         scrollStart: 0.70,
         scrollEnd: 0.80,
-        title: "AERODYNAMICS: FRONT WING",
-        description: "Ground Effect Venturi Tunnels • Active Aero • DRS System • Negative Lift Generation",
+        title: "AERO: VISIONARY LEADERSHIP", // Updated for Pranjul's Bio
+        description: "Autonomous Systems • Strategic Planning • First Impressions • EQ",
         position: { x: "10%", y: "40%" },
         color: "#FFFF00"
     },
     {
         scrollStart: 0.80,
         scrollEnd: 0.90,
-        title: "REAR: EXHAUST & DIFFUSER",
-        description: "Blown Diffuser Effect • Wastegate Pipes • Rain Light • Crash Structure",
-        position: { x: "65%", y: "70%" },
-        color: "#FF2800"
+        title: "EXHAUST: WORK-LIFE BALANCE",
+        description: "Stress Management • Burnout Prevention • Sustainability • Mental Health",
+        position: { x: "85%", y: "70%" },
+        color: "#FFA500"
     },
     {
         scrollStart: 0.90,
-        scrollEnd: 0.99,
-        title: "TEAM: PIT CREW",
-        description: "Sub-2 Second Stops • 20+ Crew Members • Precision Engineering • Strategy Command",
-        position: { x: "50%", y: "85%" }, // Bottom center
-        color: "#FFFFFF"
+        scrollEnd: 0.98, // Shortened slightly to transition to Track
+        title: "PIT CREW: CIC COMMUNITY", // Specific context
+        description: "Mentorship • Peer Learning • 20+ Crew Members • Resilience",
+        position: { x: "20%", y: "20%" },
+        color: "#00FFFF"
+    },
+    {
+        scrollStart: 0.98,
+        scrollEnd: 2.0, // EXTENDED SIGNIFICANTLY to stay visible at end
+        title: "TRACK: EXECUTION & RELIABILITY",
+        description: "Consistency • High Performance • Market Value • Delivery",
+        position: { x: "50%", y: "85%" }, // Center bottom
+        color: "#FF00FF"
     }
 ];
 
@@ -235,24 +243,32 @@ export default function FerrariSpotlightVideo({ member }) {
     // 0.25: Venom starts covering screen
     // 0.40: Screen is fully black (Venom + Blackout layer)
 
-    // Ferrari entrance animations - Starts CLEANLY at 0.50
-    // This leaves 0.40->0.50 as a "Dead Zone" for loading
-    const ferrariProgress = useTransform(smoothProgress, [0.50, 1], [0, 1]);
-    const ferrariOpacity = useTransform(smoothProgress, [0.50, 0.52], [0, 1]); // Fast fade in
-    const ferrariScale = useTransform(smoothProgress, [0.50, 0.52], [0.95, 1.0]);
+    // Ferrari entrance animations - Fade in EARLY (0.40) but PAUSE playback
+    // This eliminates the "Big Black Portion" by showing the car immediately
+    const ferrariProgress = useTransform(smoothProgress, [0.50, 1], [0, 1]); // Progress starts at 0.50 (Hold until then)
+    const ferrariOpacity = useTransform(smoothProgress, [0.40, 0.42], [0, 1]); // Fast fade in RIGHT AFTER transition
+    const ferrariScale = useTransform(smoothProgress, [0.40, 0.42], [0.95, 1.0]);
 
     // Track progress changes
     useMotionValueEvent(smoothProgress, "change", (latest) => {
         setCurrentProgress(latest);
+        // Debug: Log scroll progress for user calibration
+        console.log("SCROLL:", latest.toFixed(4));
     });
 
     // Control video playback based on scroll
-    // DECOUPLED: Only runs after 0.50
+    // DECOUPLED & PAUSED: Only runs after 0.50 (video is visible from 0.40)
     useEffect(() => {
         if (videoRef.current) {
             // Map scroll progress (0.50-1.0) to video duration (0-100%)
-            // We ensure this only calculates when we are past the transition
-            if (currentProgress < 0.50) return;
+            // We ensure this only calculates when we are past the hold
+            if (currentProgress < 0.50) {
+                // FORCE PAUSE AT START (0.0) during the hold period (0.40-0.50)
+                if (videoRef.current.currentTime !== 0) {
+                    videoRef.current.currentTime = 0;
+                }
+                return;
+            }
 
             const relativeProgress = Math.max(0, (currentProgress - 0.50) / 0.50);
             const targetTime = relativeProgress * VIDEO_DURATION;
@@ -262,7 +278,7 @@ export default function FerrariSpotlightVideo({ member }) {
                 videoRef.current.currentTime = targetTime;
             }
         }
-    }, [currentProgress, isLoaded]); // Added isLoaded to dependencies
+    }, [currentProgress, isLoaded]);
 
     // Handle video load with multiple event listeners and fallback
     useEffect(() => {
@@ -348,8 +364,8 @@ export default function FerrariSpotlightVideo({ member }) {
                     style={{
                         zIndex: 50,
                         backgroundColor: 'black',
-                        // Opaque from 0.25 to 0.50. This creates the "Dead Zone" buffer.
-                        opacity: currentProgress >= 0.25 && currentProgress < 0.50 ? 1 : 0,
+                        // Opaque from 0.25 to 0.40. Video fades in at 0.40.
+                        opacity: currentProgress >= 0.25 && currentProgress < 0.40 ? 1 : 0,
                         pointerEvents: 'none'
                     }}
                 />
@@ -425,26 +441,25 @@ export default function FerrariSpotlightVideo({ member }) {
                 {annotations.map((ann, i) => {
                     let opacity = 0;
                     if (currentProgress >= ann.scrollStart && currentProgress <= ann.scrollEnd) {
-                        const fadeIn = (currentProgress - ann.scrollStart) / 0.1;
-                        const fadeOut = (ann.scrollEnd - currentProgress) / 0.1;
+                        // Use a much shorter fade duration (0.01) so it reaches full opacity quickly
+                        const fadeIn = (currentProgress - ann.scrollStart) / 0.01;
+                        const fadeOut = (ann.scrollEnd - currentProgress) / 0.01;
                         opacity = Math.min(1, fadeIn, fadeOut);
                     }
 
                     return (
                         <motion.div
                             key={i}
-                            className="fixed p-4 rounded-lg shadow-2xl max-w-sm backdrop-blur-md"
+                            className="fixed p-6 rounded-xl shadow-2xl max-w-sm backdrop-blur-xl border border-white/10"
                             style={{
                                 left: ann.position.x,
                                 top: ann.position.y,
                                 opacity,
-                                zIndex: 40,
-                                backgroundColor: `rgba(0, 0, 0, 0.8)`,
-                                borderColor: ann.color,
-                                borderWidth: '2px',
-                                borderStyle: 'solid',
-                                fontFamily: 'var(--font-family-mono)',
-                                boxShadow: `0 0 20px ${ann.color}40`
+                                zIndex: 60, // Ensure it's above everything including blackout
+                                backgroundColor: `rgba(0, 0, 0, 0.9)`, // Darker background for contrast
+                                transform: 'translate(-50%, -50%)', // Center based on position
+                                boxShadow: `0 8px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px ${ann.color}40`, // Glassmorphism glow
+                                borderLeft: `4px solid ${ann.color}` // Accent line
                             }}
                         >
                             <h3 style={{
