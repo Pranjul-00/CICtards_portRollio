@@ -309,6 +309,17 @@ export default function FerrariSpotlightVideo({ member }) {
                     <div className="absolute top-0 left-0 right-0 h-[150px] bg-gradient-to-b from-[rgba(37,36,35,0.7)] to-transparent" />
                 </motion.div>
 
+                {/* BLACKOUT LAYER - blocks video during transition (z-25) */}
+                <div
+                    className="absolute inset-0"
+                    style={{
+                        zIndex: 25,
+                        backgroundColor: 'rgb(37, 36, 35)',
+                        opacity: currentProgress < 0.42 ? 1 : Math.max(0, 1 - (currentProgress - 0.42) / 0.08),
+                        pointerEvents: 'none'
+                    }}
+                />
+
                 {/* HERO SECTION - z-30 */}
                 <motion.div
                     className="absolute top-0 left-0 w-full h-screen flex items-center justify-center"
