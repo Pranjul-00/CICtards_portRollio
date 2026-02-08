@@ -5,22 +5,22 @@ import Link from "next/link";
 import CursorTrail from "./ui/CursorTrail";
 import ScratchRevealImage from "./ui/ScratchRevealImage";
 
-const TOTAL_FRAMES = 240;
+const TOTAL_FRAMES = 480; // Doubled from 240 to include new frames
 const HERO_HEIGHT = 1000; // Hero section height
 const SCROLL_HEIGHT = 6000; // Increased for hero + Ferrari
 
 // Section 1: Only ENGINE (strengths) and COCKPIT (skills)
 const annotations = [
     {
-        scrollStart: 0.0,
-        scrollEnd: 0.4,
+        scrollStart: 0.3, // Delayed to appear AFTER the "High-Speed Overtake" animation (0.25)
+        scrollEnd: 0.55,
         title: "ENGINE: CORE STRENGTHS",
         description: "Full-stack development • System architecture • Backend mastery • Problem solving",
         position: { x: "15%", y: "35%" },
         color: "#CC0000"
     },
     {
-        scrollStart: 0.35,
+        scrollStart: 0.6, // Clean separation from previous card
         scrollEnd: 0.95,
         title: "COCKPIT: SKILLS & EXPERTISE",
         description: "React • Next.js • TypeScript • Node.js • Modern frameworks • UI/UX design",
@@ -50,8 +50,24 @@ export default function FerrariSpotlight({ member }) {
     });
 
     // START FERRARI ANIMATION AFTER HERO SECTION (1000px / 6000px = ~0.166)
+    // "High-Speed Overtake" Transition Logic
+
+    // 1. Hero Exit Animation (0.1 -> 0.25)
+    // As we scroll, zoom INTO the hero (simulate driving past), blur it, and fade out
+    const heroScale = useTransform(smoothProgress, [0.1, 0.25], [1, 1.5]);
+    const heroOpacity = useTransform(smoothProgress, [0.15, 0.25], [1, 0]);
+    // FIXED: Return full filter string to avoid useTransform in JSX
+    const heroBlur = useTransform(smoothProgress, [0.1, 0.25], ["blur(0px)", "blur(10px)"]);
+
+    // 2. Ferrari Entrance Animation (0.15 -> 0.3)
+    // The car zooms in slightly, slides up, and comes into focus
     const ferrariProgress = useTransform(smoothProgress, [0.166, 1], [0, 1]);
-    const ferrariOpacity = useTransform(smoothProgress, [0.2, 0.3], [0, 1]); // Fade in delayed until AFTER hero section
+
+    const ferrariOpacity = useTransform(smoothProgress, [0.15, 0.25], [0, 1]);
+    const ferrariScale = useTransform(smoothProgress, [0.15, 0.25], [0.9, 1.0]);
+    const ferrariY = useTransform(smoothProgress, [0.15, 0.25], ["100px", "0px"]);
+    // FIXED: Return full filter string to avoid useTransform in JSX
+    const ferrariBlur = useTransform(smoothProgress, [0.15, 0.25], ["blur(10px)", "blur(0px)"]);
 
     // Frames only update once we're past the hero section
     const frameIndex = useTransform(ferrariProgress, [0, 1], [0, TOTAL_FRAMES - 1]);
@@ -198,7 +214,17 @@ export default function FerrariSpotlight({ member }) {
 
             {/* Hero Section - Content (Hamilton with Scratchable Helmet Overlay) */}
             {isLoaded && (
-                <div className="relative w-full overflow-hidden" style={{ height: `${HERO_HEIGHT}px`, pointerEvents: 'none' }}>
+                <motion.div
+                    className="relative w-full overflow-hidden"
+                    style={{
+                        height: `${HERO_HEIGHT}px`,
+                        pointerEvents: 'none',
+                        // Apply Exit Animations to entire Hero container
+                        scale: heroScale,
+                        opacity: heroOpacity,
+                        filter: heroBlur // FIXED: Use pre-calculated motion value
+                    }}
+                >
 
                     {/* Layer 1: "44" Text (z-1) - Background decoration */}
                     <div className="sticky top-0 left-0 w-full h-screen flex items-center justify-center" style={{ zIndex: 1 }}>
@@ -254,15 +280,20 @@ export default function FerrariSpotlight({ member }) {
                             </motion.div>
                         </div>
                     </div>
-                </div>
+                </motion.div>
             )}
             {/* Main Content - Ferrari */}
             {isLoaded && (
                 <div className="relative w-full" style={{ height: `${SCROLL_HEIGHT}px` }}>
-                    {/* Sticky Canvas with fade-in tied to scroll */}
+                    {/* Sticky Canvas with High-Speed Entry Animation */}
                     <motion.div
                         className="sticky top-0 left-0 w-full h-screen"
-                        style={{ opacity: ferrariOpacity }}
+                        style={{
+                            opacity: ferrariOpacity,
+                            scale: ferrariScale,
+                            y: ferrariY,
+                            filter: ferrariBlur // FIXED: Use pre-calculated motion value
+                        }}
                     >
                         <canvas ref={canvasRef} className="w-full h-full" />
                     </motion.div>
@@ -311,35 +342,23 @@ export default function FerrariSpotlight({ member }) {
                         }
                         opacity = Math.max(0, Math.min(1, opacity));
 
-                        // Calculate inverse colors
-                        const bgR = Math.round(37 + (218 - 37) * currentProgress);
-                        const bgG = Math.round(36 + (213 - 36) * currentProgress);
-                        const bgB = Math.round(35 + (208 - 35) * currentProgress);
-
-                        const cardBgR = 255 - bgR;
-                        const cardBgG = 255 - bgG;
-                        const cardBgB = 255 - bgB;
-
-                        const cardTextR = bgR;
-                        const cardTextG = bgG;
-                        const cardTextB = bgB;
-
                         return (
                             <motion.div
                                 key={i}
-                                className="fixed p-4 rounded-lg shadow-2xl max-w-sm"
+                                className="fixed p-4 rounded-lg shadow-2xl max-w-sm backdrop-blur-md"
                                 style={{
                                     left: ann.position.x,
                                     top: ann.position.y,
                                     opacity,
                                     zIndex: 20,
-                                    backgroundColor: `rgba(${cardBgR}, ${cardBgG}, ${cardBgB}, 1.0)`,
+                                    backgroundColor: `rgba(0, 0, 0, 0.8)`, // Dark semi-transparent background for contrast
                                     borderColor: ann.color,
                                     borderWidth: '2px',
                                     borderStyle: 'solid',
                                     fontFamily: 'var(--font-family-mono)',
                                     fontSize: 'var(--font-size)',
-                                    userSelect: 'none'
+                                    userSelect: 'none',
+                                    boxShadow: `0 0 20px ${ann.color}40` // Subtle glow matching the section color
                                 }}
                                 initial={{ scale: 0.8, opacity: 0 }}
                                 animate={{ scale: 1, opacity }}
@@ -349,8 +368,9 @@ export default function FerrariSpotlight({ member }) {
                                     style={{
                                         fontFamily: 'var(--font-family-mono)',
                                         fontSize: '13px',
-                                        color: ann.color,
-                                        letterSpacing: '0.5px'
+                                        color: ann.color, // Bright section color (Red/Green)
+                                        letterSpacing: '0.5px',
+                                        textShadow: `0 0 10px ${ann.color}80` // Glow effect
                                     }}>
                                     {ann.title}
                                 </h3>
@@ -358,7 +378,7 @@ export default function FerrariSpotlight({ member }) {
                                     style={{
                                         fontFamily: 'var(--font-family-mono)',
                                         fontSize: 'var(--font-size)',
-                                        color: `rgb(${cardTextR}, ${cardTextG}, ${cardTextB})`,
+                                        color: '#ebebeb', // Bright off-white text for readability
                                         lineHeight: '1.4'
                                     }}>
                                     {ann.description}
