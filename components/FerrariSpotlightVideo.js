@@ -462,42 +462,6 @@ export default function FerrariSpotlightVideo({ member }) {
                 })}
             </div>
 
-            {/* SCROLL SNAP TARGETS - Mapped to Video Timestamps */}
-            {/* Range: 0.48 (Start) to 1.0 (End) = 0.52 total travel for 36.93s video */}
-            <div className="absolute inset-0 pointer-events-none" style={{ height: `${SCROLL_HEIGHT}px` }}>
-                {/* Hero / Start */}
-                <div className="absolute w-full" style={{ top: '0%', height: '25%', scrollSnapAlign: 'start', scrollSnapStop: 'always' }} />
-
-                {/* Transition Area - Don't snap here */}
-
-                {/* 1. Engine (1s) -> ~49.5% */}
-                {/* Large catch area 40% - 54% to ensure it stops here first */}
-                <div className="absolute w-full" style={{ top: '49.5%', height: '14%', scrollSnapAlign: 'start', scrollSnapStop: 'always' }} />
-
-                {/* 2. Cockpit (5s) -> 5s / 36.93s * 0.52 + 0.48 ≈ 0.55 */}
-                <div className="absolute w-full" style={{ top: '55%', height: '5%', scrollSnapAlign: 'center', scrollSnapStop: 'always' }} />
-
-                {/* 3. Front Car (16s) -> 16s / 36.93s * 0.52 + 0.48 ≈ 0.70 */}
-                <div className="absolute w-full" style={{ top: '70%', height: '5%', scrollSnapAlign: 'center', scrollSnapStop: 'always' }} />
-
-                {/* 4. Back Car (23s) -> 23s / 36.93s * 0.52 + 0.48 ≈ 0.80 */}
-                <div className="absolute w-full" style={{ top: '80%', height: '5%', scrollSnapAlign: 'center', scrollSnapStop: 'always' }} />
-
-                {/* 5. Pitstop (29s) -> 29s / 36.93s * 0.52 + 0.48 ≈ 0.89 */}
-                <div className="absolute w-full" style={{ top: '89%', height: '5%', scrollSnapAlign: 'center', scrollSnapStop: 'always' }} />
-
-                {/* 6. Outside (36s) -> 36s / 36.93s * 0.52 + 0.48 ≈ 0.99 */}
-                <div className="absolute w-full" style={{ top: '99%', height: '1%', scrollSnapAlign: 'end', scrollSnapStop: 'always' }} />
-            </div>
-
-            {/* Global Styles for Scroll Snap */}
-            <style jsx global>{`
-                html {
-                    scroll-snap-type: y mandatory;
-                    scroll-behavior: smooth;
-                }
-            `}</style>
-
             {/* Navigation */}
             <Link
                 href="/"
