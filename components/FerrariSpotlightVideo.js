@@ -231,10 +231,10 @@ export default function FerrariSpotlightVideo({ member }) {
     const heroBlur = useTransform(smoothProgress, [0.1, 0.25], ["blur(0px)", "blur(8px)"]);
     const heroOpacity = useTransform(smoothProgress, [0.23, 0.26], [1, 0]); // Quick fade AFTER Venom covers
 
-    // Ferrari entrance animations - delayed to 0.52 (1s hold)
-    const ferrariProgress = useTransform(smoothProgress, [0.52, 1], [0, 1]);
-    const ferrariOpacity = useTransform(smoothProgress, [0.52, 0.54], [0, 1]); // Fast fade in
-    const ferrariScale = useTransform(smoothProgress, [0.52, 0.54], [0.95, 1.0]);
+    // Ferrari entrance animations - delayed to 0.60 (~5s hold)
+    const ferrariProgress = useTransform(smoothProgress, [0.60, 1], [0, 1]);
+    const ferrariOpacity = useTransform(smoothProgress, [0.60, 0.62], [0, 1]); // Fast fade in
+    const ferrariScale = useTransform(smoothProgress, [0.60, 0.62], [0.95, 1.0]);
 
     // Track progress changes
     useMotionValueEvent(smoothProgress, "change", (latest) => {
@@ -244,9 +244,9 @@ export default function FerrariSpotlightVideo({ member }) {
     // Control video playback based on scroll
     useEffect(() => {
         if (videoRef.current) {
-            // Map scroll progress (0.52-1.0) to video duration (0-100%)
+            // Map scroll progress (0.60-1.0) to video duration (0-100%)
             // We use a slightly earlier start for playback to ensure it's ready
-            const relativeProgress = Math.max(0, (currentProgress - 0.52) / 0.48);
+            const relativeProgress = Math.max(0, (currentProgress - 0.60) / 0.40);
             const targetTime = relativeProgress * VIDEO_DURATION;
 
             // Only update if difference is significant to avoid jitter
@@ -339,9 +339,9 @@ export default function FerrariSpotlightVideo({ member }) {
                     className="absolute inset-0"
                     style={{
                         zIndex: 50,
-                        backgroundColor: 'rgb(37, 36, 35)',
-                        // Extended blackout to 0.52 (was 0.48) to match delayed video start
-                        opacity: currentProgress >= 0.25 && currentProgress < 0.52 ? 1 : 0,
+                        backgroundColor: 'black',
+                        // Extended blackout to 0.60 (was 0.52) to match delayed video start
+                        opacity: currentProgress >= 0.25 && currentProgress < 0.60 ? 1 : 0,
                         pointerEvents: 'none'
                     }}
                 />
